@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "./AppLayout";
-import TodosPage from "../pages/ui/TodosPage";
 
 
 
@@ -22,8 +21,8 @@ export const routing = createBrowserRouter([
       },
       {
         path: "/todos",
-        element: <TodosPage />
-      }
+        element: <div>Todos</div>,
+      },
     ],
   },
 ]);
