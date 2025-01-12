@@ -1,32 +1,51 @@
 import { useAppDispatch } from "../../app/store";
-import { deleteTodo, updateTodo } from "../todos-async-action";
+import { removeTodo, updateTodo } from "../todos-async-action";
 import { ITodoServer, TTodoPartial } from "../todos-types";
 
-const TodoItem = ({id, todo, completed }: ITodoServer) => {
+const TodoItem = ({ id, todo, completed }: ITodoServer) => {
+  const dispatch = useAppDispatch();
 
-    const dispatch = useAppDispatch();
-
-  const removeTodoHandler = () => {
-    dispatch(deleteTodo(id))
+  const changeCheckedHandler = () => {
+    const body: TTodoPartial = {
+      completed: !completed,
+    };
+    dispatch(updateTodo({ id, body }));
   };
 
-  const handlerChangeTodo = () => {
+  const changeTitleHandler = () => {
     const body: TTodoPartial = {
-        completed: !completed,
-    }
+      todo: prompt("Введите новое значение") || "",
+    };
+    dispatch(updateTodo({ id, body }));
+  };
 
-    dispatch(updateTodo({id,body}))
-  }
+  const deleteTodoHandler = () => {
+    dispatch(removeTodo(id));
+  };
+
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <input type="checkbox" checked={completed} onChange={handlerChangeTodo} />
+      <input
+        type="checkbox"
+        checked={completed}
+        onChange={changeCheckedHandler}
+      />
       <p>{todo}</p>
-      <button
-        onClick={removeTodoHandler}
-        style={{ background: "orange", cursor: "pointer", width: "25px" }}
-      >
-        x
-      </button>
+
+      <div>
+        <button
+          onClick={changeTitleHandler}
+          style={{ background: "violet", cursor: "pointer", width: "45px" }}
+        >
+          edit
+        </button>
+        <button
+          onClick={deleteTodoHandler}
+          style={{ background: "orange", cursor: "pointer", width: "25px" }}
+        >
+          x
+        </button>
+      </div>
     </div>
   );
 };
