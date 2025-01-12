@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import TodoItem from "./TodoItem";
 import { createTodo, getTodos } from "../todos-async-action";
 import { selectTodos } from "../todos-selectors";
-import { TTodoNew } from "../todos-types";
+import { ITodoServer, TTodoNew } from "../todos-types";
 
 const TodosPage = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ const TodosPage = () => {
       <h1>TodosPage</h1>
       <button onClick={addTodoHandler}>Create Todo</button>
       <ul>
-        {todos.map((todo) => {
+        {todos.map((todo: ITodoServer) => {
           return <TodoItem key={todo.id} {...todo} />;
         })}
       </ul>
